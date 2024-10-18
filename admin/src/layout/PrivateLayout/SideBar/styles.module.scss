@@ -1,0 +1,59 @@
+@import "../../../styles/colors.scss";
+@import "../../../styles/breakpoints.scss";
+
+.sidebar {
+  width: 200px;
+  @include responsive("mdDown") {
+    display: none;
+  }
+  @include responsive("mdUp") {
+    display: block;
+  }
+  &.isActive {
+    display: block;
+    width: 100%;
+  }
+
+  .closeIcon {
+    cursor: pointer;
+    font-size: 20px;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 16px;
+    justify-content: space-between;
+    @include responsive("mdDown") {
+      width: 100%;
+    }
+    .closeIcon {
+      @include responsive("mdUp") {
+        display: none;
+      }
+    }
+  }
+  .sidebarContent {
+    .active {
+      background: $menu-item-active-bgColor;
+      color: $menu-item-active-color;
+      border-left: 4px solid $menu-item-active-color;
+    }
+
+    .sidebarItem {
+      display: flex;
+      cursor: pointer;
+      align-items: center;
+      height: 50px;
+      width: 100%;
+
+      .itemNames {
+        width: 100%;
+        padding-left: 20px;
+      }
+      .active {
+        width: 100%;
+      }
+    }
+  }
+}

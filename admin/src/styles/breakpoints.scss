@@ -1,0 +1,93 @@
+$breakpoint-375px: 375px;
+$breakpoint-576px: 576px;
+$breakpoint-768px: 768px;
+$breakpoint-991px: 991px;
+$breakpoint-1024px: 1024px;
+$breakpoint-1200px: 1200px;
+$breakpoint-1400px: 1400px;
+$breakpoint-1920px: 1920px;
+
+// media queries
+
+@mixin responsive($keys...) {
+  @each $key in $keys {
+    @if $key == xsUp {
+      /*  375px and up : Mobile devices */
+      @media only screen and (min-width: $breakpoint-375px) {
+        @content;
+      }
+    }
+    @if $key == xsDown {
+      /* 0px - 375px: Mobile devices */
+      @media only screen and (max-width: $breakpoint-375px) {
+        @content;
+      }
+    }
+    @if $key == smUp {
+      /* 576px and up : */
+      @media only screen and (min-width: $breakpoint-576px) {
+        @content;
+      }
+    }
+    @if $key == smDown {
+      // down and 576px :
+      @media only screen and (max-width: $breakpoint-576px) {
+        @content;
+      }
+    }
+
+    @if $key == mdUp {
+      /* 768px and up :  */
+      @media only screen and (min-width: $breakpoint-768px) {
+        @content;
+      }
+    }
+
+    @if $key == mdDown {
+      /* down and 768px : */
+      @media only screen and (max-width: $breakpoint-768px) {
+        @content;
+      }
+    }
+
+    @if $key == lgUp {
+      /* 991px and up :  */
+      @media only screen and (min-width: $breakpoint-991px) {
+        @content;
+      }
+    }
+
+    @if $key == lgDown {
+      /* down and 991px:  */
+      @media only screen and (max-width: $breakpoint-991px) {
+        @content;
+      }
+    }
+
+    @if $key == xlUp {
+      /* 1200px and up : */
+      @media only screen and (min-width: $breakpoint-1200px) {
+        @content;
+      }
+    }
+    @if $key == xlDown {
+      /* down and 1200px :  */
+      @media only screen and (max-width: $breakpoint-1200px) {
+        @content;
+      }
+    }
+
+    @if $key == xxlUp {
+      /* 1400px and up */
+      @media only screen and (min-width: $breakpoint-1400px) {
+        @content;
+      }
+    }
+    @if $key == xxlDown {
+      /* down and 1400px  */
+      @media only screen and (max-width: $breakpoint-1400px) {
+        @content;
+      }
+    }
+  }
+}
