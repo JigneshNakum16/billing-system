@@ -2,8 +2,9 @@ import mongoose, { Schema } from "mongoose";
 
 const OrderItemsSchema = new Schema({
   foodId: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Food",
+    required: true,
   },
   price: {
     type: Number,
@@ -20,10 +21,9 @@ const orderSchema = new Schema(
     username: {
       type: String,
       required: true,
-      trim: true,
     },
     userphone: {
-      type: Number,
+      type: String,
       required: true,
     },
     items: [OrderItemsSchema],
