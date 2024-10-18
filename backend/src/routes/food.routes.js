@@ -9,10 +9,9 @@ import { verifyJwt } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.use(verifyJwt);
-router.route("/addFood").post(addFood);
+router.route("/addFood").post(verifyJwt,addFood);
 router.route("/getFood").get(getAllFood);
-router.route("/updateFood/:id").put(updateFood);
-router.route("/deleteFood/:id").delete(deleteFood);
+router.route("/updateFood/:id").put(verifyJwt,updateFood);
+router.route("/deleteFood/:id").delete(verifyJwt,deleteFood);
 
 export default router;

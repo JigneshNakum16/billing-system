@@ -16,11 +16,11 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
 
 import adminRouter from "./routes/admin.routes.js";
-import foodRouter from "./routes/food.routes.js"
-import orderRouter from "./routes/order.routes.js"
+import foodRouter from "./routes/food.routes.js";
+import orderRouter from "./routes/order.routes.js";
 
 app.use("/api/admin", adminRouter);
 app.use("/api/food", foodRouter);
-app.use("/api/order",orderRouter)
+app.use("/api/order", orderRouter);
 
 export { app };
