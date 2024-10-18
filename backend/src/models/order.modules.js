@@ -1,27 +1,33 @@
 import mongoose, { Schema } from "mongoose";
 
+const OrderItemsSchema = new Schema({
+  foodId: {
+    type: Schema.Types.ObjectId,
+    ref: "Food",
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+});
+
 const orderSchema = new Schema(
   {
-
     username: {
       type: String,
       required: true,
       trim: true,
     },
-    phone : {
-        type : Number,
-        required : true,
-        unique : true,
+    userphone: {
+      type: Number,
+      required: true,
     },
-    foodId: {
-      type: Schema.Types.ObjectId,
-      ref: "Food",
-    },
-    price : {
-        type : Number,
-        required : true,
-    },
-    quantity: {
+    items: [OrderItemsSchema],
+    totalAmount: {
       type: Number,
       required: true,
     },
