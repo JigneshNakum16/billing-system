@@ -1,6 +1,7 @@
 import cx from "classnames";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import logo from "../../../assets/image/logo.png";
 import classes from "./styles.module.scss";
 import Cookies from "js-cookie";
 
@@ -36,7 +37,6 @@ const SideBar = ({ showSidebar, handleSidebarToggle }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [activeTab, setActiveTab] = useState(1);
-  // const { role } = get(data, "user", {});
 
   useEffect(() => {
     const initialTab = sidebarItems.find((item) => {
@@ -51,7 +51,8 @@ const SideBar = ({ showSidebar, handleSidebarToggle }) => {
     if (result === true) {
       if (Cookies.get("token")) {
         Cookies.remove("token");
-        navigate("/login");
+        // navigate("/login");
+        window.location.href = "/login";
       }
     }
   };
@@ -65,7 +66,9 @@ const SideBar = ({ showSidebar, handleSidebarToggle }) => {
       <div
         className={cx(classes.header, { [classes.sidebarBurger]: showSidebar })}
       >
-        <div className={classes.logo}>logo</div>
+        <div className={classes.logo}>
+          <img src={logo} alt="logo" />
+        </div>
         <div className={classes.closeIcon} onClick={handleSidebarToggle}>
           <i className="fa-solid fa-xmark"></i>
         </div>
