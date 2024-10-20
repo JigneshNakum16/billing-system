@@ -38,7 +38,6 @@ const addFood = asyncHandler(async (req, res) => {
 const updateFood = asyncHandler(async (req, res) => {
   const { foodName, price, category, description } = req.body;
   const { id } = req.params;
-  console.log({ foodName, price, category, description, id });
   if (
     [foodName, price, category, description].some(
       (field) => field?.toString()?.trim() === ""
@@ -62,7 +61,6 @@ const updateFood = asyncHandler(async (req, res) => {
     if (!food) {
       throw new ApiError(500, "Food update failed");
     }
-    console.log("food", food);
     return res
       .status(200)
       .json(new ApiResponse(200, food, "Food updated successfully"));

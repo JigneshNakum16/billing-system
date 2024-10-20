@@ -1,0 +1,32 @@
+@import "../../../styles/breakpoints.scss";
+@import "../../../styles/colors.scss";
+
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  .container {
+    height: 50px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .burger {
+      visibility: hidden;
+      i {
+        font-size: 20px;
+      }
+      @include responsive("mdDown") {
+        visibility: visible;
+        cursor: pointer;
+      }
+    }
+    .title {
+      text-align: center;
+      width: 100%;
+    }
+  }
+}
