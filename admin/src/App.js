@@ -51,13 +51,6 @@ function App() {
       />
     ));
   };
-  // const logoutSuccess = useSelector(logoutSuccessSelector);
-  // useEffect(() => {
-  //   if (logoutSuccess) {
-  //     window.location = "/login";
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [logoutSuccess]);
 
   return <Routes>{renderRoutes()}</Routes>;
 }

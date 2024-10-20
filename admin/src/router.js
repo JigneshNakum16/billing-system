@@ -1,6 +1,6 @@
+import AddFood from "./pages/AddFood";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/SignUp";
-import Dashboard from "./pages/Dashboard";
 import Food from "./pages/Food";
 import Order from "./pages/Order";
 const routes = [
@@ -20,22 +20,22 @@ const routes = [
   },
   {
     path: "/",
-    name: "Dashboard",
-    component: Dashboard,
+    name: "Orders",
+    component: Order,
+    isPrivate: true,
+    layout: "private",
+  },
+  {
+    path: "/food",
+    name: "Food",
+    component: Food,
     isPrivate: true,
     layout: "private",
   },
   {
     path: "/addFood",
     name: "AddFood",
-    component: Food,
-    isPrivate: true,
-    layout: "private",
-  },
-  {
-    path: "/orders",
-    name: "Orders",
-    component: Order,
+    component: AddFood,
     isPrivate: true,
     layout: "private",
   },

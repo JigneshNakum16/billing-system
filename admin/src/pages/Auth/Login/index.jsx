@@ -1,7 +1,7 @@
-import {useState } from "react";
+import { useState } from "react";
 import Cookies from "js-cookie";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { loginAdmin } from "../../../api/auth";
 
 const Login = () => {
   const [login, setLogin] = useState({
@@ -21,10 +21,7 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/admin/login`,
-        login
-      );
+      const response = await loginAdmin(login);
       const {
         data: {
           data: { accessToken },
@@ -32,11 +29,7 @@ const Login = () => {
       } = response;
 
       if (accessToken) {
-        Cookies.set("token", accessToken, {
-          path: "/",
-          sameSite: "None",
-          secure: true,
-        });
+        Cookies.set("token", accessToken);
         navigate("/");
       } else {
         console.error("No access token received from the API.");
@@ -52,7 +45,7 @@ const Login = () => {
         <h3 className="text-center mb-4">Login</h3>
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
-          <label htmlFor="username">Username</label>
+            <label htmlFor="username">Username</label>
             <input
               type="username"
               className="form-control"
@@ -61,7 +54,7 @@ const Login = () => {
               value={login.username}
               onChange={(e) => handleChange(e)}
               placeholder="Enter your username"
-              // required
+              required
             />
           </div>
           <div className="form-group mb-3">
@@ -74,7 +67,7 @@ const Login = () => {
               value={login.password}
               onChange={(e) => handleChange(e)}
               placeholder="Enter your password"
-              // required
+              required
             />
           </div>
           <button type="submit" className="btn btn-primary w-100">

@@ -1,26 +1,31 @@
 import cx from "classnames";
-// import get from "lodash/get";
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
-// import { useLocation } from "react-router-dom";
-import { ReactComponent as CloseIcon } from "../../../assets/icons/close-icon.svg";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import classes from "./styles.module.scss";
+import Cookies from "js-cookie";
 
 const sidebarItems = [
   {
     id: 1,
+
+    name: "Orders",
+    slug: "/",
+    icon: "",
+  },
+  {
+    id: 2,
+    name: "Food",
+    slug: "/food",
+    icon: "",
+  },
+  {
+    id: 3,
     name: "Add Food",
     slug: "/addFood",
     icon: "",
   },
   {
-    id: 2,
-    name: "Orders",
-    slug: "/orders",
-    icon: "",
-  },
-  {
-    id: 3,
+    id: 4,
     name: "Logout",
     slug: "",
     icon: "",
@@ -29,18 +34,27 @@ const sidebarItems = [
 
 const SideBar = ({ showSidebar, handleSidebarToggle }) => {
   const navigate = useNavigate();
-  // const { pathname } = useLocation();
-  const [openFormModal, setOpenFormModal] = useState(false);
+  const { pathname } = useLocation();
   const [activeTab, setActiveTab] = useState(1);
   // const { role } = get(data, "user", {});
 
-  // useEffect(() => {
-  //   const initialTab = sidebarItems.find((item) => {
-  //     return item.slug === pathname;
-  //   });
-  //   const id = initialTab ? initialTab.id : null;
-  //   setActiveTab(id || 1);
-  // }, [pathname]);
+  useEffect(() => {
+    const initialTab = sidebarItems.find((item) => {
+      return item.slug === pathname;
+    });
+    const id = initialTab ? initialTab.id : null;
+    setActiveTab(id || 1);
+  }, [pathname]);
+
+  const handleLogOut = () => {
+    let result = window.confirm("Do you want to logout?");
+    if (result === true) {
+      if (Cookies.get("token")) {
+        Cookies.remove("token");
+        navigate("/login");
+      }
+    }
+  };
 
   return (
     <div
@@ -58,16 +72,15 @@ const SideBar = ({ showSidebar, handleSidebarToggle }) => {
       </div>
 
       <div className={classes.sidebarContent}>
-        {sidebarItems.map(({ id, name, icon, slug }) => {
+        {sidebarItems.map(({ id, name, slug }) => {
           return (
             <div
               key={id}
               onClick={() => {
                 setActiveTab(id);
                 showSidebar && handleSidebarToggle();
-                if (id === 3) {
-                  setOpenFormModal(!openFormModal);
-                  return;
+                if (id === 4) {
+                  handleLogOut();
                 }
                 navigate(`${slug}`);
               }}

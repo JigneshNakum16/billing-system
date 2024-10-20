@@ -7,12 +7,11 @@ export const verifyJwt = asyncHandler(async (req, res, next) => {
   try {
     const token =
       req.cookies?.token || req.headers.authorization?.replace("Bearer ", "");
-
+ 
     if (!token) {
       return next(new ApiError(400, "Please authenticate using valid token"));
     }
 
-    // Verify the token using the secret
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
     const admin = await Admin.findById(decoded._id).select(
