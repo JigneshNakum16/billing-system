@@ -3,7 +3,6 @@ import classes from "./styles.module.scss";
 import { addFood } from "../../api/auth";
 
 const AddFood = () => {
-
   const [food, setFood] = useState({
     foodName: "",
     price: "",
@@ -11,7 +10,7 @@ const AddFood = () => {
     description: "",
   });
 
-  const [errors, setErrors] = useState({}); 
+  const [errors, setErrors] = useState({});
 
   const validate = () => {
     const newErrors = {};
@@ -19,7 +18,7 @@ const AddFood = () => {
     if (!food.foodName.trim()) {
       newErrors.foodName = "Food name is required.";
     }
-    
+
     if (!food.price.trim()) {
       newErrors.price = "Price is required.";
     } else if (isNaN(food.price) || Number(food.price) <= 0) {
@@ -32,11 +31,7 @@ const AddFood = () => {
 
     if (!food.description.trim()) {
       newErrors.description = "Description is required.";
-    } 
-    // else if (food.description.trim().length < 5) {
-    //   newErrors.description = "Description must be at least 5 characters long.";
-    // }
-
+    }
     return newErrors;
   };
 
@@ -55,7 +50,7 @@ const AddFood = () => {
       return;
     }
 
-     await addFood(food);
+    await addFood(food);
 
     // Reset form fields
     setFood({
@@ -126,7 +121,9 @@ const AddFood = () => {
           <div className="form-group mb-3">
             <label htmlFor="description">Description</label>
             <textarea
-              className={`form-control ${errors.description ? "is-invalid" : ""}`}
+              className={`form-control ${
+                errors.description ? "is-invalid" : ""
+              }`}
               id="description"
               name="description"
               value={food.description}
@@ -138,12 +135,19 @@ const AddFood = () => {
             )}
           </div>
 
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{
+              backgroundColor: "#438a7a",
+              border: "none",
+              outline: "none",
+            }}
+          >
             Add Food
           </button>
         </form>
       </div>
-   
     </div>
   );
 };

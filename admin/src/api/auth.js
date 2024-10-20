@@ -1,5 +1,14 @@
 import { Request } from "./request";
 
+
+export const registerAdmin = async (data) => {
+  return Request.call({
+    url: "/admin/register",
+    method: "POST",
+    data,
+  });
+};
+
 export const loginAdmin = async (data) => {
   return Request.call({
     url: "/admin/login",

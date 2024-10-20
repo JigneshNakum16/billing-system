@@ -9,7 +9,7 @@ const Header = ({ openSidebar }) => {
           <i className="fa-solid fa-bars" onClick={openSidebar}></i>
         </div>
         <div className={classes.title}>
-          <h5>Food shop billing system</h5>
+          <h3>Food shop billing system</h3>
         </div>
       </div>
     </div>
