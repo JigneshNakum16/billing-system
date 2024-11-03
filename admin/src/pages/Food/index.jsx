@@ -86,16 +86,12 @@ const Food = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log("validateForm()", validateForm());
-
     if (!validateForm()) {
       return; // Do not submit the form if validation fails
     }
 
     try {
       const { status } = await updateFood(selectedFood._id, selectedFood);
-      console.log("status", status);
       if (status) {
         fetchFoods(); // Refresh the food list after successful update
       }

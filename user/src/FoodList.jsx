@@ -8,7 +8,9 @@ function FoodList({ foodItemList }) {
           <tr>
             <th>Food Id</th>
             <th>Food Name</th>
-            <th>Food Price</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>
@@ -16,10 +18,15 @@ function FoodList({ foodItemList }) {
             foodItemList.length > 0 &&
             foodItemList.map((order, index) => (
               <tr key={index}>
-                <td className="text-truncate" style={{ width: "100px" }}>
+                <td
+                  className="text-truncate"
+                  style={{ maxWidth: "100px" }}
+                >
                   {order._id}
                 </td>
                 <td>{order.foodName}</td>
+                <td>{order.category}</td>
+                <td>{order.description}</td>
                 <td>{order.price}</td>
               </tr>
             ))}

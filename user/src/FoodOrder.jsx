@@ -6,12 +6,13 @@ function FoodOrder({ foodItemList }) {
   const [foodData, setFoodData] = useState({
     name: "",
     phone: "",
-    foodId: "",
+    foodName: "",
     foodQuantity: 1,
   });
   const [foodList, setFoodList] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
   const [response, setResponse] = useState([]);
+  const [itemNotFound, setItemNotFound] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,23 +22,28 @@ function FoodOrder({ foodItemList }) {
     });
   };
 
-  const getFoodItem = (foodId) => {
-    const foodItem = foodItemList.find((item) => item?._id === foodId);
-    return foodItem ? foodItem : " Not found";
+  const getFoodItem = (foodName) => {
+    const foodItem = foodItemList.find((item) => item?.foodName === foodName);
+    return foodItem ? foodItem : "";
   };
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const foodItem = getFoodItem(foodData?.foodId);
+    const foodItem = getFoodItem(foodData?.foodName);
+    setItemNotFound(false);
+    if (!foodItem) {
+      setItemNotFound(true);
+      return;
+    }
     const newFood = {
-      foodName: foodItem?.foodName,
+      foodName: foodData?.foodName?.trim(),
       quantity: parseInt(foodData?.foodQuantity),
       price: foodItem?.price,
     };
     const orderItem = {
-      foodId: foodData?.foodId,
+      foodId: foodItem?._id,
+      foodName: foodData?.foodName?.trim(),
       price: foodItem?.price,
       quantity: parseInt(foodData?.foodQuantity),
     };
@@ -47,14 +53,13 @@ function FoodOrder({ foodItemList }) {
     setFoodData({
       name: foodData?.name,
       phone: foodData?.phone,
-      foodId: "",
+      foodName: "",
       foodQuantity: 1,
     });
   };
   const handleCancel = () => {
     // Logic for cancel action (e.g., clearing the order or navigating back)
-    console.log("Cancelled the order");
-    setOrderItems(null); // Clear the order if needed
+    setOrderItems(null);
   };
 
   const handleOrder = async () => {
@@ -63,7 +68,6 @@ function FoodOrder({ foodItemList }) {
       userphone: foodData?.phone || "",
       items: orderItems || [],
     };
-    
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/order/addOrder`,
@@ -75,7 +79,6 @@ function FoodOrder({ foodItemList }) {
         } = res;
 
         setResponse([...response, data]);
-
       } else {
         console.error("Failed to add order", res);
       }
@@ -84,11 +87,16 @@ function FoodOrder({ foodItemList }) {
     }
   };
 
-
   return (
-    <div className="container mt-2 d-flex">
+    <div className="container mt-2">
       <div className="shadow p-4">
         <h2 className="mb-4">Food Order</h2>
+        {itemNotFound && (
+          <div class="alert alert-danger" role="alert">
+            Food item not found. please enter a existing food item.
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           {/* Name field */}
           <div className="form-group mb-3">
@@ -120,16 +128,17 @@ function FoodOrder({ foodItemList }) {
             />
           </div>
 
+          {/* Food Name field */}
           <div className="form-group mb-3">
-            <label htmlFor="foodId">Food Id</label>
+            <label htmlFor="foodName">Food Name</label>
             <input
               type="text"
               className="form-control"
-              id="foodId"
-              name="foodId"
-              value={foodData.foodId}
+              id="foodName"
+              name="foodName"
+              value={foodData.foodName}
               onChange={handleChange}
-              placeholder="Enter your foodId number"
+              placeholder="Enter your food name number"
               required
             />
           </div>
@@ -154,7 +163,6 @@ function FoodOrder({ foodItemList }) {
             Add Food
           </button>
         </form>
-
         <div className="mt-3">
           <table className="table table-bordered">
             <thead className="thead-dark">
@@ -177,16 +185,46 @@ function FoodOrder({ foodItemList }) {
             </tbody>
           </table>
         </div>
-
-        <button type="button" className="btn btn-primary" onClick={handleOrder}>
+        <button
+          type="button"
+          className="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#billOrderModal"
+          onClick={handleOrder}
+        >
           Add Order
         </button>
       </div>
 
-      <div>
-        {response && response.length > 0 && (
-          <OrderBill order={response} onCancel={handleCancel} />
-        )}
+      <div
+        className="modal fade"
+        id="billOrderModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="billOrderModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2 className="modal-title" id="billOrderModalLabel">
+                Bill Order
+              </h2>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                onClick={handleCancel}
+              ></button>
+            </div>
+            <div className="modal-body">
+              {response && response.length > 0 && (
+                <OrderBill order={response} />
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

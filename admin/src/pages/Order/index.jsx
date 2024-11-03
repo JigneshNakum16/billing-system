@@ -51,7 +51,7 @@ const Order = () => {
                     <table className="table">
                       <thead>
                         <tr>
-                          <th>Food ID</th>
+                          <th>Item</th>
                           <th>Quantity</th>
                           <th>Price</th>
                         </tr>
@@ -59,7 +59,7 @@ const Order = () => {
                       <tbody>
                         {order.items.map((item, itemIndex) => (
                           <tr key={item._id}>
-                            <td>{item.foodId}</td>
+                            <td>{item.foodName}</td>
                             <td>{item.quantity}</td>
                             <td>₹{item.price}</td>
                           </tr>

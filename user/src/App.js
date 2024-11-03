@@ -29,7 +29,7 @@ function App() {
       <center>
         <h1 className="mb-4">Food shop</h1>
       </center>
-      <div className="d-flex gap-0">
+      <div className="d-flex gap-0 mb-5">
         <FoodList foodItemList={foodItemList} />
         <FoodOrder foodItemList={foodItemList} />
       </div>

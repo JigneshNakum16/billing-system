@@ -66,7 +66,6 @@ const Login = () => {
 
     try {
       const response = await loginAdmin(login);
-      console.log('response', response)
       const {
         data: {
           data: { accessToken },

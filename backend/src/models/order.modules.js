@@ -6,6 +6,11 @@ const OrderItemsSchema = new Schema({
     ref: "Food",
     required: true,
   },
+  foodName: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   price: {
     type: Number,
     required: true,

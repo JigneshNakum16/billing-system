@@ -1,18 +1,20 @@
 import React from "react";
 import axios from "axios";
 
-const OrderBill = ({ order, onCancel }) => {
+const OrderBill = ({ order }) => {
   const handlePrint = async () => {
     try {
       // Sending SMS message using an external API like Twilio
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/send-sms`, // Your SMS sending API route
+      const phoneNumber = order[0]?.userphone.startsWith("+91")
+        ? order[0]?.userphone
+        : `+91${order[0]?.userphone}`;
+      await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/order/send-sms`, // Your SMS sending API route
         {
-          phone: order.userphone,
-          message: `Dear ${order.username}, your order has been placed successfully. Total amount: ₹${order.totalAmount}`,
+          phone: phoneNumber,
+          message: `Dear ${order[0]?.username}, your order has been placed successfully. Total amount: ₹${order[0]?.totalAmount}`,
         }
       );
-      console.log("SMS sent", response.data);
 
       // Trigger print action
       window.print();
@@ -21,17 +23,14 @@ const OrderBill = ({ order, onCancel }) => {
     }
   };
 
-  const handleCancel = () => {
-    onCancel(); // Call the onCancel function to handle the cancel action
-  };
-
   return (
-    <div className="container shadow p-4">
-      <h3 className="mt-3">Bill Order </h3>
-      <div>
-        <span>Customer Name : {order[0]?.username}</span><br />
+    <div className="container">
+      <div className="d-flex justify-content-between">
+        <span>Customer Name : {order[0]?.username}</span>
         <span>Phone : {order[0]?.userphone}</span>
+        <br />
       </div>
+      <span>Order Date: {new Date(order[0]?.createdAt).toLocaleString()}</span>
       <table className="table table-bordered mt-3">
         <thead>
           <tr>
@@ -46,7 +45,7 @@ const OrderBill = ({ order, onCancel }) => {
             order?.map((item, index) =>
               item?.items?.map((data) => (
                 <tr key={data?.foodId || index}>
-                  <td>{data?.foodId}</td>
+                  <td>{data?.foodName}</td>
                   <td>{data?.quantity}</td>
                   <td>₹{data?.price}</td>
                 </tr>
@@ -66,11 +65,13 @@ const OrderBill = ({ order, onCancel }) => {
       </table>
 
       <div className="d-flex justify-content-between mt-4">
-        <button className="btn btn-primary" onClick={handlePrint}>
+        <button
+          className="btn btn-primary"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          onClick={handlePrint}
+        >
           Print & Send SMS
-        </button>
-        <button className="btn btn-danger" onClick={handleCancel}>
-          Cancel
         </button>
       </div>
     </div>

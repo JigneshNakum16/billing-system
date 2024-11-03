@@ -128,7 +128,6 @@ const SignUp = () => {
               value={register.name}
               onChange={handleChange}
               placeholder="Enter your full name"
-              required
             />
             {errors.name && (
               <div className="invalid-feedback">{errors.name}</div>
@@ -144,7 +143,6 @@ const SignUp = () => {
               value={register.username}
               onChange={handleChange}
               placeholder="Enter your username"
-              required
             />
             {errors.username && (
               <div className="invalid-feedback">{errors.username}</div>
@@ -160,7 +158,6 @@ const SignUp = () => {
               value={register.phone}
               onChange={handleChange}
               placeholder="Enter your phone number"
-              required
             />
             {errors.phone && (
               <div className="invalid-feedback">{errors.phone}</div>
@@ -175,7 +172,6 @@ const SignUp = () => {
               value={register.address}
               onChange={handleChange}
               placeholder="Enter your address"
-              required
             />
             {errors.address && (
               <div className="invalid-feedback">{errors.address}</div>
@@ -191,7 +187,6 @@ const SignUp = () => {
               value={register.password}
               onChange={handleChange}
               placeholder="Enter your password"
-              required
             />
             {errors.password && (
               <div className="invalid-feedback">{errors.password}</div>
@@ -209,7 +204,6 @@ const SignUp = () => {
               value={register.confirmPassword}
               onChange={handleChange}
               placeholder="Confirm your password"
-              required
             />
             {errors.confirmPassword && (
               <div className="invalid-feedback">{errors.confirmPassword}</div>
